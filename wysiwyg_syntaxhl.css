@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+.mceIframeContainer {
+	padding: 1em;
+}
+
+
+pre.wysiwyg-syntaxhl:before {
+    content: "SyntaxHighlighter";
+    font-size: 300%;
+    font-style: bold;
+    font-family: serif;
+    color: #FFF;
+    position: relative;
+    float: right;
+}
+
+pre.wysiwyg-syntaxhl {
+  background-color: #EEE;
+  padding: 1em;
+  margin: 0 5px;
+  border-radius: 5px;
+}
+
+.defaultSkin span.mce_syntaxhl {
+  background: url('tinymce/syntaxhl/img/highlight.gif') no-repeat left center;
+}

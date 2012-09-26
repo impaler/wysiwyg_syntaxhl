@@ -1,0 +1,7 @@
+name = "Wysiwyg SyntaxHighlighter Plugin"
+description = "Wysiwyg editor plugin that integrates syntax highlighting into a normal &lt;pre&gt; element"
+dependencies[] = wysiwyg
+;dependencies[] = wysiwyg_preelementfix
+dependencies[] = syntaxhighlighter
+;package = "User interface"
+core = 7.x

@@ -1,0 +1,86 @@
+<?php
+/**
+ * @file
+ * wysiwyg_syntaxhl is an plugin for adding syntax highlighting to the tinyMCE editor
+ * Clifford Meece, 2009
+ * http://cliffordmeece.com
+ */
+
+/**
+ * Implements hook_help().
+ */
+function wysiwyg_syntaxhl_help($path, $arg) {
+  if ($path == 'admin/modules#description') {
+    return t('Enables the SyntaxHighlighter plugin in Wysiwyg editor.');
+  }
+}
+
+/**
+ * Implements hook_wysiwyg_plugin()
+ *
+ * See http://drupalcontrib.org/api/drupal/contributions!wysiwyg!wysiwyg.api.php/function/hook_wysiwyg_plugin/7
+ */
+function wysiwyg_syntaxhl_wysiwyg_plugin($editor, $version) {
+  _wysiwyg_syntaxhl_client_side_setup();
+	switch ($editor) {
+    case 'tinymce':
+      if ($version > 3) {
+        return _wysiwyg_syntaxhl_setup_tinymce();
+      }
+			break;
+	}
+}
+
+
+/**
+ * Add our stylesheet
+ * Store the enabled brushes list in client side drupal settings js
+ */
+function _wysiwyg_syntaxhl_client_side_setup() {
+  // The folowing variable is needed to make sure drupal_add_js isn't called twice
+  // taken from the example in imce.module
+  static $integrated;
+	if (!isset($integrated)) {
+    $integrated = TRUE;
+    drupal_add_css(drupal_get_path('module', 'wysiwyg_syntaxhl') . '/wysiwyg_syntaxhl.css',
+    		array('group' => CSS_THEME,
+    				  'every_page' => TRUE,
+    				));
+    $languages=array();
+    foreach (variable_get('syntaxhighlighter_enabled_languages', array('shBrushPhp.js')) as $ind=>$val) {
+      if ($val) {
+        $languages[]=array('value' => strtolower(substr(substr($ind, 7),0,-3)),
+          'text' => substr(substr($val, 7),0,-3)
+        );
+      }
+    }
+    $settings = array(
+      'wysiwyg_syntaxhl' =>  array('languages' => $languages),
+    );
+    drupal_add_js($settings, 'setting');
+  }
+}
+
+
+function _wysiwyg_syntaxhl_setup_tinymce() {
+	$path = drupal_get_path('module', 'wysiwyg_syntaxhl') . '/tinymce/syntaxhl';
+	$plugins['syntaxhl'] = array(
+		'url' => 'http://drupal.org/project/wysiwyg_syntaxhl',
+		'path' => $path,
+		'filename' => 'editor_plugin.js',
+    'icon path' => $path . '/img',
+		'icon file' => 'highlight.gif',
+		'buttons' => array(
+				'syntaxhl' => t('Syntax highlighter'),
+		),
+		'extensions' => array(),
+		'options' => array(),
+		'load' => TRUE,
+		'internal' => FALSE,
+		'extended_valid_elements' => array(
+				'pre[class|title]',
+		),
+  );
+	return $plugins;
+}
+
