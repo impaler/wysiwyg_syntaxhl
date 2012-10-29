@@ -95,20 +95,24 @@
 
 tinyMCEPopup.onInit.add(function() {
     
-    var codey = CodeMirror.fromTextArea(document.getElementById('syntaxhl_code'), {
-      reindentOnLoad: true, 
-      continuousScanning: 500,
-      theme: 'monokai',
-      lineNumbers: true,
-      onChange: function () {
-          updateTextArea();
-	}
-    });
-    
-    function updateTextArea () {
-      var value = codey.getValue();
-      document.syntaxhl['syntaxhl_code'].value = value;
-    }
+var codey = CodeMirror.fromTextArea(document.getElementById('syntaxhl_code'), {
+    reindentOnLoad: true, 
+    continuousScanning: 500,
+    theme: 'monokai',
+    lineNumbers: true,
+    onChange: function () {
+    updateTextArea();
+    },
+    extraKeys: {
+        "Tab": "indentMore", 
+        "Shift-Tab": "indentLess"
+        }
+});
+
+function updateTextArea () {
+    var value = codey.getValue();
+    document.syntaxhl['syntaxhl_code'].value = value;
+}
 
 });
 
