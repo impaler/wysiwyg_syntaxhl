@@ -4,22 +4,21 @@
 	padding: 1em;
 }
 
-
 pre.wysiwyg-syntaxhl:before {
-    content: "SyntaxHighlighter";
+    content: "Code";
     font-size: 300%;
-    font-style: bold;
     font-family: serif;
-    color: #FFF;
+    color: #353535;
     position: relative;
     float: right;
 }
 
 pre.wysiwyg-syntaxhl {
-  background-color: #EEE;
-  padding: 1em;
-  margin: 0 5px;
-  border-radius: 5px;
+    background-color: #000000;
+    padding: 1em;
+    color: #ffffff;
+    margin: 0 5px;
+    border-radius: 5px;
 }
 
 .defaultSkin span.mce_syntaxhl {
