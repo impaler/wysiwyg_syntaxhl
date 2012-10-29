@@ -30,7 +30,7 @@
 				ed.windowManager.open({
 					file: url + '/dialog.php?path=' + escape(tinyMCE.baseURL) + '&random=' + Math.random(),
 					width: 650 + parseInt(ed.getLang('syntaxhl.delta_width', 0)),
-					height: 400 + parseInt(ed.getLang('syntaxhl.delta_height', 0)),
+					height: 500 + parseInt(ed.getLang('syntaxhl.delta_height', 0)),
 					inline: 1
 				}, {
 					plugin_url: url

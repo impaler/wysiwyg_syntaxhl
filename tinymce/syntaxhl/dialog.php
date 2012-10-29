@@ -40,8 +40,14 @@
   ?>
 	<script type="text/javascript" src="js/dialog.js?<?php echo time(); ?>"></script>
 
+	<script type="text/javascript" src="/sites/all/libraries/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="/sites/all/libraries/codemirror/mode/haxe/haxe.js"></script>
+    <link type="text/css" rel="stylesheet" href="/sites/all/libraries/codemirror/lib/codemirror.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="/sites/all/libraries/codemirror/theme/monokai.css" "media="all" />
+    
 </head>
 <body>
+
 <form name="syntaxhl" onsubmit="SyntaxHLDialog.insert(); return false;" action="#">
 	<fieldset id="syntaxhl_options">
 		<legend><a target="_blank" title="{#syntaxhl_dlg.help}" href="http://alexgorbatchev.com/SyntaxHighlighter/manual/configuration/">{#syntaxhl_dlg.highlight_options}</a></legend>
@@ -73,6 +79,7 @@
 		<legend>{#syntaxhl_dlg.paste}</legend>
 	<textarea name="syntaxhl_code" id="syntaxhl_code" rows="15" cols="100" style="width: 100%; height: 100%; font-family: 'Courier New',Courier,mono; font-size: 12px;" class="mceFocus"></textarea>
 	</fieldset>
+	
 	<div class="mceActionPanel">
 		<div style="float: left">
 			<input type="submit" id="insert" name="insert" value="{#insert}" />
@@ -82,5 +89,30 @@
 		</div>
 	</div>
 </form>
+
+
+<script>
+
+tinyMCEPopup.onInit.add(function() {
+    
+    var codey = CodeMirror.fromTextArea(document.getElementById('syntaxhl_code'), {
+      reindentOnLoad: true, 
+      continuousScanning: 500,
+      theme: 'monokai',
+      lineNumbers: true,
+      onChange: function () {
+          updateTextArea();
+	}
+    });
+    
+    function updateTextArea () {
+      var value = codey.getValue();
+      document.syntaxhl['syntaxhl_code'].value = value;
+    }
+
+});
+
+</script>
+
 </body>
 </html>
