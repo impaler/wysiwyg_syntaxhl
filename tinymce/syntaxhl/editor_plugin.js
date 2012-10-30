@@ -73,13 +73,21 @@
 				
 				// add the 'wysiwyg-syntaxhl' marker class
 				var preElements = ed.dom.select('pre');
+				
 				for (var i = 0; i < preElements.length; i++) {
 					var class_attr = ed.dom.getAttrib(preElements[i], 'class');
+					
+					if ( class_attr.search( 'mceNonEditable') == -1 ) {
+						var nonedit = ' mceNonEditable';
+						var newclass = class_attr + nonedit;
+						ed.dom.setAttrib(preElements[i], 'class', newclass);
+					} 
+					
 					if (class_attr && -1 != class_attr.search(/brush\s*:/)) {
 						ed.dom.addClass(preElements[i], 'wysiwyg-syntaxhl');
 					}
+					
 				}
-				
 
 			});
 

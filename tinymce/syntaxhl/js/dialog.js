@@ -145,22 +145,23 @@ var SyntaxHLDialog = {
 		}
 
 		if (n != null && n.nodeName == 'PRE') {
-			style = 'wysiwyg-syntaxhl brush:' + f.syntaxhl_language.value + ';' + options;
-			ed.dom.setOuterHTML(n, '<pre class="' + style + '"' + title + '>' + ed.dom.encode(f.syntaxhl_code.value) + '</pre>');
-			ed.dom.setAttrib(n, 'class', style);
-			if (f.syntaxhl_title_attr.value != '') {
-				ed.dom.setAttrib(n, 'title', f.syntaxhl_title_attr);
-			}
-		} else {
+		  //todo whats going on here with title, it causes a bug with mceNonEditable
+// 			style = 'wysiwyg-syntaxhl brush:' + f.syntaxhl_language.value + ';' + options + ' mceNonEditable';
+// 			ed.dom.setOuterHTML(n, '<pre class="' + style + '"' + title + '>' + ed.dom.encode(f.syntaxhl_code.value) + '</pre>');
+// 			ed.dom.setAttrib(n, 'class', style);
+// 			if (f.syntaxhl_title_attr.value != '') {
+// 				ed.dom.setAttrib(n, 'title', f.syntaxhl_title_attr);
+// 			}
+// 		} else {
 			// only do this if there is code
-			if (f.syntaxhl_code.value != '') {
+// 			if (f.syntaxhl_code.value != '') {
 				textarea_output = '<pre class="wysiwyg-syntaxhl brush:';
-				textarea_output += f.syntaxhl_language.value + ';' + options + '"' + title;
+				textarea_output += f.syntaxhl_language.value + ';' + options + ' mceNonEditable"' + title;
 				textarea_output += '>';
 				textarea_output += tinyMCEPopup.editor.dom.encode(f.syntaxhl_code.value);
 				textarea_output += "\n</pre>";
 				tinyMCEPopup.editor.execCommand('mceInsertContent', false, textarea_output);
-			}
+// 			}
 		}
 
 		tinyMCEPopup.close();

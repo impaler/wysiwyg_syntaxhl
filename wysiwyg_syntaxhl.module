@@ -25,7 +25,7 @@ function wysiwyg_syntaxhl_wysiwyg_plugin($editor, $version) {
 	switch ($editor) {
     case 'tinymce':
       if ($version > 3) {
-        return _wysiwyg_syntaxhl_setup_tinymce();
+        return _wysiwyg_syntaxhl_setup_tinymce($editor);
       }
 			break;
 	}
@@ -62,13 +62,14 @@ function _wysiwyg_syntaxhl_client_side_setup() {
 }
 
 
-function _wysiwyg_syntaxhl_setup_tinymce() {
+function _wysiwyg_syntaxhl_setup_tinymce($editor) {
 	$path = drupal_get_path('module', 'wysiwyg_syntaxhl') . '/tinymce/syntaxhl';
+    
 	$plugins['syntaxhl'] = array(
 		'url' => 'http://drupal.org/project/wysiwyg_syntaxhl',
 		'path' => $path,
 		'filename' => 'editor_plugin.js',
-    'icon path' => $path . '/img',
+        'icon path' => $path . '/img',
 		'icon file' => 'highlight.gif',
 		'buttons' => array(
 				'syntaxhl' => t('Syntax highlighter'),
@@ -81,6 +82,14 @@ function _wysiwyg_syntaxhl_setup_tinymce() {
 				'pre[class|title]',
 		),
   );
+    
+    $path =  libraries_get_path('tinymce') . '/jscripts/tiny_mce/plugins/noneditable' ;
+      $plugins['noneditable'] = array(
+          'path' => $path,
+          'extensions' => array('noneditable' => t('Noneditable')),
+          'load' => TRUE,
+        );
+    
 	return $plugins;
 }
 
